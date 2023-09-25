@@ -1,14 +1,30 @@
 import Link from "next/link";
 import { useState } from "react";
 
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../util/firebase';
 export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const signUp = async (e) => {
-    e.preventDefault();
-    // Put the signUp code here
+    e.preventDefault(); 
+    
+createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in
+  
+    const user = userCredential.user;
+    console.log(user);
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ..
+  });
   };
+  
   return (
     <>
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
